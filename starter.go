@@ -14,14 +14,14 @@ var (
 	redisnoderegistry      registry.Registry
 )
 
-type RegistryRedisModule struct {
+type RegistryModule struct {
 }
 
-func (r RegistryRedisModule) Name() string {
+func (r RegistryModule) Name() string {
 	return "registry_starter"
 }
 
-func (r RegistryRedisModule) Load(value interface{}) {
+func (r RegistryModule) Load(value interface{}) {
 	item := cast.ToStringMapString(value)
 
 	if item["prefix"] == "" {
@@ -41,7 +41,7 @@ func (r RegistryRedisModule) Load(value interface{}) {
 
 }
 
-func (r RegistryRedisModule) registryRedis(item map[string]string) {
+func (r RegistryModule) registryRedis(item map[string]string) {
 
 	timeout := time.Second * 300
 	if item["timeout"] != "" {
@@ -88,6 +88,6 @@ func (r RegistryRedisModule) registryRedis(item map[string]string) {
 	}
 }
 
-func (r RegistryRedisModule) Close() {
+func (r RegistryModule) Close() {
 	_ = redisnoderegistry.Remove()
 }
